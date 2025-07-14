@@ -110,7 +110,7 @@ export default function AddTaskModal({ visible, onClose, onAddTask }: AddTaskMod
           backgroundColor: theme.colors.surface,
           borderTopLeftRadius: '24px',
           borderTopRightRadius: '24px',
-          maxHeight: '90vh',
+          maxHeight: '85vh',
           overflow: 'hidden',
           display: 'flex',
           flexDirection: 'column',
@@ -150,7 +150,12 @@ export default function AddTaskModal({ visible, onClose, onAddTask }: AddTaskMod
         </div>
 
         {/* Content */}
-        <div style={{ flex: 1, padding: '24px 24px 0', overflowY: 'auto' }}>
+        <div style={{ 
+          flex: 1, 
+          padding: '24px 24px 0', 
+          overflowY: 'auto',
+          paddingBottom: '0'
+        }}>
           {/* Task Details */}
           <div style={{ marginBottom: '24px' }}>
             <h3 style={{ fontSize: '18px', fontWeight: '600', fontFamily: 'Poppins, sans-serif', color: theme.colors.text, marginBottom: '16px' }}>
@@ -317,23 +322,26 @@ export default function AddTaskModal({ visible, onClose, onAddTask }: AddTaskMod
 
         {/* Fixed Bottom Buttons */}
         <div style={{ 
-          padding: '20px 24px 24px', 
+          padding: '20px 24px 32px', 
           backgroundColor: theme.colors.surface,
           borderTop: `1px solid ${theme.colors.border}`,
           display: 'flex', 
-          gap: '12px'
+          gap: '12px',
+          flexShrink: 0,
+          position: 'relative',
+          zIndex: 10
         }}>
             <button
               onClick={handleClose}
               style={{
                 flex: 1,
-                padding: '16px',
+                padding: '14px',
                 borderRadius: '12px',
                 border: 'none',
                 backgroundColor: theme.colors.border,
                 color: theme.colors.textSecondary,
                 cursor: 'pointer',
-                fontSize: '16px',
+                fontSize: '15px',
                 fontWeight: '600',
               }}
             >
@@ -344,13 +352,13 @@ export default function AddTaskModal({ visible, onClose, onAddTask }: AddTaskMod
               disabled={!taskTitle.trim()}
               style={{
                 flex: 2,
-                padding: '16px',
+                padding: '14px',
                 borderRadius: '12px',
                 border: 'none',
                 backgroundColor: taskTitle.trim() ? theme.colors.primary : theme.colors.border,
                 color: 'white',
                 cursor: taskTitle.trim() ? 'pointer' : 'not-allowed',
-                fontSize: '16px',
+                fontSize: '15px',
                 fontWeight: '600',
               }}
             >
