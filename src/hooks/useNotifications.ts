@@ -12,11 +12,25 @@ export const useNotifications = () => {
   const initializeNotifications = async () => {
     try {
       await notificationService.initialize();
-      setIsEnabled(true);
+      // Check if notifications are actually available
+      const hasPermissions = await checkNotificationPermissions();
+      setIsEnabled(hasPermissions);
       await refreshPendingNotifications();
     } catch (error) {
       console.error('Failed to initialize notifications:', error);
       setIsEnabled(false);
+    }
+  };
+
+  const checkNotificationPermissions = async (): Promise<boolean> => {
+    try {
+      if (!window.Capacitor?.isNativePlatform()) {
+        return false;
+      }
+      // Additional permission check logic can be added here
+      return true;
+    } catch {
+      return false;
     }
   };
 

@@ -12,27 +12,50 @@ export interface CalendarEvent {
 
 class CalendarService {
   private isInitialized = false;
+  private authInstance: any = null;
 
   async initialize() {
     if (this.isInitialized) return;
 
-    await this.initializeBrowserAuth();
+    try {
+      await this.initializeBrowserAuth();
+    } catch (error) {
+      console.error('Calendar initialization failed:', error);
+    }
   }
 
   private async initializeBrowserAuth() {
     try {
+      // Check if we have the required environment variables
+      const clientId = import.meta.env.VITE_GOOGLE_CLIENT_ID;
+      const apiKey = import.meta.env.VITE_GOOGLE_API_KEY;
+      
+      if (!clientId || !apiKey) {
+        console.warn('Google Calendar: Missing client ID or API key');
+        return;
+      }
+
       // Load Google API
       await this.loadGoogleAPI();
       
-      await window.gapi.load('auth2', async () => {
-        const authInstance = await window.gapi.auth2.init({
-          client_id: process.env.VITE_GOOGLE_CLIENT_ID || 'your-client-id'
-        });
+      await new Promise<void>((resolve, reject) => {
+        window.gapi.load('auth2', async () => {
+          try {
+            this.authInstance = await window.gapi.auth2.init({
+              client_id: clientId,
+              scope: 'https://www.googleapis.com/auth/calendar https://www.googleapis.com/auth/calendar.events'
+            });
 
-        // Check if user is already signed in
-        if (authInstance.isSignedIn.get()) {
-          await this.setupCalendarAPI();
-        }
+            // Check if user is already signed in
+            if (this.authInstance.isSignedIn.get()) {
+              await this.setupCalendarAPI();
+            }
+            
+            resolve();
+          } catch (error) {
+            reject(error);
+          }
+        });
       });
 
       this.isInitialized = true;
@@ -57,12 +80,19 @@ class CalendarService {
   }
 
   private async setupCalendarAPI() {
-    await window.gapi.load('client', async () => {
-      await window.gapi.client.init({
-        apiKey: process.env.VITE_GOOGLE_API_KEY,
-        clientId: process.env.VITE_GOOGLE_CLIENT_ID,
-        discoveryDocs: ['https://www.googleapis.com/discovery/v1/apis/calendar/v3/rest'],
-        scope: 'https://www.googleapis.com/auth/calendar https://www.googleapis.com/auth/calendar.events'
+    return new Promise<void>((resolve, reject) => {
+      window.gapi.load('client', async () => {
+        try {
+          await window.gapi.client.init({
+            apiKey: import.meta.env.VITE_GOOGLE_API_KEY,
+            clientId: import.meta.env.VITE_GOOGLE_CLIENT_ID,
+            discoveryDocs: ['https://www.googleapis.com/discovery/v1/apis/calendar/v3/rest'],
+            scope: 'https://www.googleapis.com/auth/calendar https://www.googleapis.com/auth/calendar.events'
+          });
+          resolve();
+        } catch (error) {
+          reject(error);
+        }
       });
     });
   }
@@ -70,16 +100,20 @@ class CalendarService {
   async signIn(): Promise<boolean> {
     try {
       await this.initialize();
+      
+      if (!this.authInstance) {
+        console.error('Google Auth not initialized');
+        return false;
+      }
 
-      if (window.gapi && window.gapi.auth2) {
-        const authInstance = window.gapi.auth2.getAuthInstance();
-        const user = await authInstance.signIn();
-        
-        if (user.isSignedIn()) {
-          await this.setupCalendarAPI();
-          localStorage.setItem('calendar_connected', 'true');
-          return true;
-        }
+      const user = await this.authInstance.signIn({
+        scope: 'https://www.googleapis.com/auth/calendar https://www.googleapis.com/auth/calendar.events'
+      });
+      
+      if (user.isSignedIn()) {
+        await this.setupCalendarAPI();
+        localStorage.setItem('calendar_connected', 'true');
+        return true;
       }
       
       return false;
@@ -91,9 +125,8 @@ class CalendarService {
 
   async signOut(): Promise<void> {
     try {
-      if (window.gapi && window.gapi.auth2) {
-        const authInstance = window.gapi.auth2.getAuthInstance();
-        await authInstance.signOut();
+      if (this.authInstance) {
+        await this.authInstance.signOut();
         localStorage.removeItem('calendar_connected');
       }
     } catch (error) {
@@ -102,7 +135,13 @@ class CalendarService {
   }
 
   isConnected(): boolean {
-    return localStorage.getItem('calendar_connected') === 'true';
+    try {
+      const isStored = localStorage.getItem('calendar_connected') === 'true';
+      const isSignedIn = this.authInstance?.isSignedIn?.get() || false;
+      return isStored && isSignedIn;
+    } catch {
+      return false;
+    }
   }
 
   async createEvent(event: CalendarEvent): Promise<string | null> {
