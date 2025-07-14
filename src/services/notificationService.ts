@@ -103,7 +103,7 @@ class NotificationService {
 
   async cancelNotification(id: number) {
     try {
-      await LocalNotifications.cancel({ notifications: [{ id: id.toString() }] });
+      await LocalNotifications.cancel({ notifications: [{ id }] });
       console.log('Notification cancelled:', id);
       return true;
     } catch (error) {

@@ -3,7 +3,6 @@ import { motion } from 'framer-motion';
 import { Calendar, X, Plus, Trash2, Clock, AlertCircle } from 'lucide-react';
 import { useTheme } from '@/contexts/ThemeContext';
 import { useCalendar } from '@/hooks/useCalendar';
-import { CalendarEvent } from '@/services/calendarService';
 
 interface CalendarSyncProps {
   visible: boolean;
@@ -20,7 +19,6 @@ export default function CalendarSync({ visible, onClose, tasks = [] }: CalendarS
     connect,
     disconnect,
     loadEvents,
-    createEvent,
     deleteEvent,
     createTaskEvent
   } = useCalendar();

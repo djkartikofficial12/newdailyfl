@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { motion } from 'framer-motion'
-import { Bell, Moon, Sun, Volume2, Vibrate, Heart, HelpCircle, ChevronRight, Palette, Calendar, Zap, Coffee, Sparkles, Settings as SettingsIcon } from 'lucide-react'
+import { Bell, Moon, Sun, Volume2, Vibrate, Heart, HelpCircle, ChevronRight, Palette, Calendar, Zap, Coffee, Sparkles } from 'lucide-react'
 import { useTheme } from '@/contexts/ThemeContext'
 import { useNotifications } from '@/hooks/useNotifications'
 import { useCalendar } from '@/hooks/useCalendar'
@@ -11,7 +11,6 @@ export default function Settings() {
   const { theme, isDark, toggleTheme } = useTheme()
   const { isEnabled: notificationsEnabled } = useNotifications()
   const { isConnected: calendarConnected } = useCalendar()
-  const [notifications, setNotifications] = useState(true)
   const [sounds, setSounds] = useState(true)
   const [vibration, setVibration] = useState(true)
   const [gentleReminders, setGentleReminders] = useState(true)

@@ -14,7 +14,6 @@ export default function NotificationSettings({ visible, onClose }: NotificationS
   const {
     isEnabled,
     pendingNotifications,
-    scheduleTaskReminder,
     scheduleBreakReminder,
     scheduleMotivationalNotification,
     cancelNotification,
