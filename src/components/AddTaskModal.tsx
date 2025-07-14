@@ -150,7 +150,7 @@ export default function AddTaskModal({ visible, onClose, onAddTask }: AddTaskMod
         </div>
 
         {/* Content */}
-        <div style={{ flex: 1, padding: '24px', overflowY: 'auto' }}>
+        <div style={{ flex: 1, padding: '24px 24px 0', overflowY: 'auto' }}>
           {/* Task Details */}
           <div style={{ marginBottom: '24px' }}>
             <h3 style={{ fontSize: '18px', fontWeight: '600', fontFamily: 'Poppins, sans-serif', color: theme.colors.text, marginBottom: '16px' }}>
@@ -313,7 +313,16 @@ export default function AddTaskModal({ visible, onClose, onAddTask }: AddTaskMod
           </div>
 
           {/* Buttons */}
-          <div style={{ display: 'flex', gap: '12px', marginTop: '20px', marginBottom: '20px' }}>
+        </div>
+
+        {/* Fixed Bottom Buttons */}
+        <div style={{ 
+          padding: '20px 24px 24px', 
+          backgroundColor: theme.colors.surface,
+          borderTop: `1px solid ${theme.colors.border}`,
+          display: 'flex', 
+          gap: '12px'
+        }}>
             <button
               onClick={handleClose}
               style={{
@@ -347,7 +356,6 @@ export default function AddTaskModal({ visible, onClose, onAddTask }: AddTaskMod
             >
               Add Task ✨
             </button>
-          </div>
         </div>
       </motion.div>
     </div>
