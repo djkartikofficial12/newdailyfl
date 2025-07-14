@@ -1,5 +1,3 @@
-import { google } from 'googleapis';
-
 export interface CalendarEvent {
   id?: string;
   title: string;
@@ -13,37 +11,12 @@ export interface CalendarEvent {
 }
 
 class CalendarService {
-  private auth: any = null;
-  private calendar: any = null;
   private isInitialized = false;
 
   async initialize() {
     if (this.isInitialized) return;
 
-    try {
-      // Initialize Google Auth
-      this.auth = new google.auth.GoogleAuth({
-        scopes: [
-          'https://www.googleapis.com/auth/calendar',
-          'https://www.googleapis.com/auth/calendar.events'
-        ],
-        credentials: {
-          // These would normally come from environment variables
-          // For demo purposes, we'll use a client-side flow
-          client_id: process.env.VITE_GOOGLE_CLIENT_ID,
-          client_secret: process.env.VITE_GOOGLE_CLIENT_SECRET,
-        }
-      });
-
-      this.calendar = google.calendar({ version: 'v3', auth: this.auth });
-      this.isInitialized = true;
-      
-      console.log('Calendar service initialized');
-    } catch (error) {
-      console.error('Failed to initialize calendar service:', error);
-      // Fallback to browser-based auth
-      await this.initializeBrowserAuth();
-    }
+    await this.initializeBrowserAuth();
   }
 
   private async initializeBrowserAuth() {
