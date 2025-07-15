@@ -24,7 +24,7 @@ export const useNotifications = () => {
 
   const checkNotificationPermissions = async (): Promise<boolean> => {
     try {
-      if (!window.Capacitor?.isNativePlatform()) {
+      if (!(window as any).Capacitor?.isNativePlatform()) {
         return false;
       }
       // Additional permission check logic can be added here

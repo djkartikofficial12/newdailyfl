@@ -10,7 +10,6 @@ import CalendarSync from '@/components/CalendarSync'
 export default function Settings() {
   const { theme, isDark, toggleTheme } = useTheme()
   const { isEnabled: notificationsEnabled } = useNotifications()
-  const { isConnected: calendarConnected } = useCalendar()
   const [sounds, setSounds] = useState(true)
   const [vibration, setVibration] = useState(true)
   const [gentleReminders, setGentleReminders] = useState(true)

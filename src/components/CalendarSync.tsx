@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { Calendar, X, Plus, Trash2, Clock, AlertCircle } from 'lucide-react';
+import { X } from 'lucide-react';
 import { useTheme } from '@/contexts/ThemeContext';
 import { useCalendar } from '@/hooks/useCalendar';
 
@@ -14,8 +14,6 @@ export default function CalendarSync({ visible, onClose, tasks = [] }: CalendarS
   const { theme } = useTheme();
   const {
     isConnected,
-    isLoading,
-    events,
     connect,
     disconnect,
     loadEvents,
@@ -24,84 +22,12 @@ export default function CalendarSync({ visible, onClose, tasks = [] }: CalendarS
   } = useCalendar();
 
   const [selectedTasks, setSelectedTasks] = useState<string[]>([]);
-  const [syncInProgress, setSyncInProgress] = useState(false);
 
   useEffect(() => {
     if (visible && isConnected) {
       loadEvents();
     }
   }, [visible, isConnected]);
-
-  const handleConnect = async () => {
-    const success = await connect();
-    if (success) {
-      alert('Successfully connected to Google Calendar!');
-    } else {
-      alert('Failed to connect to Google Calendar. Please try again.');
-    }
-  };
-
-  const handleDisconnect = async () => {
-    if (window.confirm('Are you sure you want to disconnect from Google Calendar?')) {
-      await disconnect();
-    }
-  };
-
-  const handleTaskSelection = (taskId: string) => {
-    setSelectedTasks(prev => 
-      prev.includes(taskId) 
-        ? prev.filter(id => id !== taskId)
-        : [...prev, taskId]
-    );
-  };
-
-  const handleSyncSelectedTasks = async () => {
-    if (selectedTasks.length === 0) return;
-
-    setSyncInProgress(true);
-    try {
-      const tasksToSync = tasks.filter(task => selectedTasks.includes(task.id));
-      let successCount = 0;
-
-      for (const task of tasksToSync) {
-        const eventId = await createTaskEvent(task);
-        if (eventId) {
-          successCount++;
-        }
-      }
-
-      alert(`Successfully synced ${successCount} out of ${tasksToSync.length} tasks to your calendar!`);
-      setSelectedTasks([]);
-      await loadEvents(); // Refresh events
-    } catch (error) {
-      console.error('Sync failed:', error);
-      alert('Failed to sync some tasks. Please try again.');
-    } finally {
-      setSyncInProgress(false);
-    }
-  };
-
-  const handleDeleteEvent = async (eventId: string, eventTitle: string) => {
-    if (window.confirm(`Are you sure you want to delete "${eventTitle}" from your calendar?`)) {
-      const success = await deleteEvent(eventId);
-      if (success) {
-        alert('Event deleted successfully!');
-      } else {
-        alert('Failed to delete event. Please try again.');
-      }
-    }
-  };
-
-  const formatEventTime = (date: Date) => {
-    return date.toLocaleString('en-US', {
-      weekday: 'short',
-      month: 'short',
-      day: 'numeric',
-      hour: 'numeric',
-      minute: '2-digit',
-      hour12: true
-    });
-  };
 
   if (!visible) return null;
 

@@ -85,7 +85,6 @@ export default function Tasks() {
   const { theme } = useTheme()
   const { triggerHaptic } = useCapacitor()
   const { scheduleTaskReminder } = useNotifications()
-  const { createTaskEvent } = useCalendar()
   const [tasks, setTasks] = useState<Task[]>(mockTasks)
   const [showAddModal, setShowAddModal] = useState(false)
   const [showPlanModal, setShowPlanModal] = useState(false)

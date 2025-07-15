@@ -27,8 +27,8 @@ class CalendarService {
   private async initializeBrowserAuth() {
     try {
       // Check if we have the required environment variables
-      const clientId = import.meta.env.VITE_GOOGLE_CLIENT_ID;
-      const apiKey = import.meta.env.VITE_GOOGLE_API_KEY;
+      const clientId = (import.meta as any).env?.VITE_GOOGLE_CLIENT_ID;
+      const apiKey = (import.meta as any).env?.VITE_GOOGLE_API_KEY;
       
       if (!clientId || !apiKey) {
         console.warn('Google Calendar: Missing client ID or API key');
@@ -84,8 +84,8 @@ class CalendarService {
       window.gapi.load('client', async () => {
         try {
           await window.gapi.client.init({
-            apiKey: import.meta.env.VITE_GOOGLE_API_KEY,
-            clientId: import.meta.env.VITE_GOOGLE_CLIENT_ID,
+            apiKey: (import.meta as any).env?.VITE_GOOGLE_API_KEY,
+            clientId: (import.meta as any).env?.VITE_GOOGLE_CLIENT_ID,
             discoveryDocs: ['https://www.googleapis.com/discovery/v1/apis/calendar/v3/rest'],
             scope: 'https://www.googleapis.com/auth/calendar https://www.googleapis.com/auth/calendar.events'
           });
