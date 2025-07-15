@@ -10,18 +10,9 @@ interface CalendarSyncProps {
   tasks?: any[];
 }
 
-export default function CalendarSync({ visible, onClose, tasks = [] }: CalendarSyncProps) {
+export default function CalendarSync({ visible, onClose }: CalendarSyncProps) {
   const { theme } = useTheme();
-  const {
-    isConnected,
-    connect,
-    disconnect,
-    loadEvents,
-    deleteEvent,
-    createTaskEvent
-  } = useCalendar();
-
-  const [selectedTasks, setSelectedTasks] = useState<string[]>([]);
+  const { isConnected, loadEvents } = useCalendar();
 
   useEffect(() => {
     if (visible && isConnected) {

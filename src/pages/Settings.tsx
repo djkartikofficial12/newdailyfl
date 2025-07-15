@@ -3,7 +3,6 @@ import { motion } from 'framer-motion'
 import { Bell, Moon, Sun, Volume2, Vibrate, Heart, HelpCircle, ChevronRight, Palette, Calendar, Zap, Coffee, Sparkles } from 'lucide-react'
 import { useTheme } from '@/contexts/ThemeContext'
 import { useNotifications } from '@/hooks/useNotifications'
-import { useCalendar } from '@/hooks/useCalendar'
 import NotificationSettings from '@/components/NotificationSettings'
 import CalendarSync from '@/components/CalendarSync'
 

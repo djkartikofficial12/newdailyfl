@@ -8,7 +8,6 @@ import FocusModeModal from '@/components/FocusModeModal'
 import { useTheme } from '@/contexts/ThemeContext'
 import { useCapacitor } from '@/hooks/useCapacitor'
 import { useNotifications } from '@/hooks/useNotifications'
-import { useCalendar } from '@/hooks/useCalendar'
 
 interface Task {
   id: string
