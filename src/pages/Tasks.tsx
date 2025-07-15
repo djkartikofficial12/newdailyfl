@@ -112,8 +112,6 @@ export default function Tasks() {
       scheduleTaskReminder(newTask.id, newTask.title, reminderTime)
     }
     
-    // Create calendar event if connected
-    createTaskEvent(newTask)
   }
 
   const toggleTask = (taskId: string) => {

@@ -168,237 +168,71 @@ export default function CalendarSync({ visible, onClose, tasks = [] }: CalendarS
 
         {/* Content */}
         <div style={{ padding: '24px', maxHeight: '70vh', overflowY: 'auto' }}>
-          {/* Connection Status */}
+          {/* Coming Soon Message */}
           <div style={{
-            backgroundColor: isConnected 
-              ? (theme.isDark ? 'rgba(76, 175, 80, 0.1)' : '#f8fff8')
-              : (theme.isDark ? 'rgba(255, 107, 107, 0.1)' : '#fff0f0'),
+            backgroundColor: theme.isDark ? 'rgba(66, 133, 244, 0.1)' : '#f0f4ff',
             borderRadius: '12px',
             padding: '16px',
             marginBottom: '24px',
-            border: `2px solid ${isConnected ? '#4caf50' : '#ff6b6b'}`,
+            border: `2px solid #4285f4`,
+            textAlign: 'center',
           }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '8px' }}>
-              <Calendar size={20} color={isConnected ? '#4caf50' : '#ff6b6b'} />
-              <h3 style={{ fontSize: '16px', fontWeight: '600', color: theme.colors.text }}>
-                Connection Status
-              </h3>
-            </div>
-            <p style={{ fontSize: '14px', color: theme.colors.textSecondary, marginBottom: '12px' }}>
-              {isConnected 
-                ? '✅ Connected to Google Calendar'
-                : '❌ Not connected to Google Calendar'
-              }
+            <div style={{ fontSize: '48px', marginBottom: '16px' }}>🚀</div>
+            <h3 style={{ fontSize: '20px', fontWeight: '700', fontFamily: 'Poppins, sans-serif', color: theme.colors.text, marginBottom: '8px' }}>
+              Coming Soon!
+            </h3>
+            <p style={{ fontSize: '16px', color: theme.colors.textSecondary, marginBottom: '16px', lineHeight: '1.5' }}>
+              We're working hard to bring you seamless Google Calendar integration! This feature will allow you to:
             </p>
             
-            {!isConnected ? (
-              <button
-                onClick={handleConnect}
-                disabled={isLoading}
-                style={{
-                  backgroundColor: '#4285f4',
-                  color: 'white',
-                  border: 'none',
-                  borderRadius: '8px',
-                  padding: '12px 16px',
-                  fontSize: '14px',
-                  fontWeight: '600',
-                  cursor: isLoading ? 'not-allowed' : 'pointer',
-                  opacity: isLoading ? 0.7 : 1,
-                }}
-              >
-                {isLoading ? 'Connecting...' : 'Connect to Google Calendar'}
-              </button>
-            ) : (
-              <button
-                onClick={handleDisconnect}
-                disabled={isLoading}
-                style={{
-                  backgroundColor: '#ff6b6b',
-                  color: 'white',
-                  border: 'none',
-                  borderRadius: '8px',
-                  padding: '12px 16px',
-                  fontSize: '14px',
-                  fontWeight: '600',
-                  cursor: isLoading ? 'not-allowed' : 'pointer',
-                  opacity: isLoading ? 0.7 : 1,
-                }}
-              >
-                Disconnect
-              </button>
-            )}
+            <div style={{ textAlign: 'left', marginBottom: '20px' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '8px' }}>
+                <span style={{ fontSize: '16px' }}>✅</span>
+                <span style={{ fontSize: '14px', color: theme.colors.text }}>Sync tasks directly to your calendar</span>
+              </div>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '8px' }}>
+                <span style={{ fontSize: '16px' }}>⏰</span>
+                <span style={{ fontSize: '14px', color: theme.colors.text }}>Get reminders 15 minutes before tasks</span>
+              </div>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '8px' }}>
+                <span style={{ fontSize: '16px' }}>🔄</span>
+                <span style={{ fontSize: '14px', color: theme.colors.text }}>Two-way sync with your existing events</span>
+              </div>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '8px' }}>
+                <span style={{ fontSize: '16px' }}>🧠</span>
+                <span style={{ fontSize: '14px', color: theme.colors.text }}>ADHD-friendly time blocking</span>
+              </div>
+            </div>
+            
+            <p style={{ fontSize: '14px', color: theme.colors.primary, fontWeight: '600', fontStyle: 'italic' }}>
+              Stay tuned for updates! 🌟
+            </p>
           </div>
 
-          {isConnected && (
-            <>
-              {/* Sync Tasks Section */}
-              {tasks.length > 0 && (
-                <div style={{ marginBottom: '24px' }}>
-                  <h3 style={{ fontSize: '18px', fontWeight: '600', color: theme.colors.text, marginBottom: '16px' }}>
-                    Sync Tasks to Calendar
-                  </h3>
-                  
-                  <div style={{ marginBottom: '16px' }}>
-                    <p style={{ fontSize: '14px', color: theme.colors.textSecondary, marginBottom: '12px' }}>
-                      Select tasks to add to your Google Calendar:
-                    </p>
-                    
-                    <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', maxHeight: '200px', overflowY: 'auto' }}>
-                      {tasks.filter(task => !task.completed).map((task) => (
-                        <div
-                          key={task.id}
-                          style={{
-                            backgroundColor: theme.colors.border,
-                            borderRadius: '8px',
-                            padding: '12px',
-                            display: 'flex',
-                            alignItems: 'center',
-                            gap: '12px',
-                          }}
-                        >
-                          <input
-                            type="checkbox"
-                            checked={selectedTasks.includes(task.id)}
-                            onChange={() => handleTaskSelection(task.id)}
-                            style={{ cursor: 'pointer' }}
-                          />
-                          <span style={{ fontSize: '20px' }}>{task.emoji}</span>
-                          <div style={{ flex: 1 }}>
-                            <p style={{ fontSize: '14px', fontWeight: '600', color: theme.colors.text }}>
-                              {task.title}
-                            </p>
-                            <p style={{ fontSize: '12px', color: theme.colors.textSecondary }}>
-                              {task.category} • {task.priority} priority
-                              {task.time && ` • ${task.time}`}
-                            </p>
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                  
-                  {selectedTasks.length > 0 && (
-                    <button
-                      onClick={handleSyncSelectedTasks}
-                      disabled={syncInProgress}
-                      style={{
-                        backgroundColor: '#34a853',
-                        color: 'white',
-                        border: 'none',
-                        borderRadius: '12px',
-                        padding: '12px 16px',
-                        fontSize: '14px',
-                        fontWeight: '600',
-                        cursor: syncInProgress ? 'not-allowed' : 'pointer',
-                        opacity: syncInProgress ? 0.7 : 1,
-                        display: 'flex',
-                        alignItems: 'center',
-                        gap: '8px',
-                        width: '100%',
-                        justifyContent: 'center',
-                      }}
-                    >
-                      <Plus size={16} />
-                      {syncInProgress ? 'Syncing...' : `Sync ${selectedTasks.length} Task${selectedTasks.length > 1 ? 's' : ''}`}
-                    </button>
-                  )}
-                </div>
-              )}
-
-              {/* Calendar Events */}
-              <div style={{ marginBottom: '24px' }}>
-                <h3 style={{ fontSize: '18px', fontWeight: '600', color: theme.colors.text, marginBottom: '16px' }}>
-                  Upcoming Calendar Events
-                </h3>
-                
-                {isLoading ? (
-                  <div style={{ textAlign: 'center', padding: '20px' }}>
-                    <p style={{ fontSize: '14px', color: theme.colors.textSecondary }}>
-                      Loading events...
-                    </p>
-                  </div>
-                ) : events.length === 0 ? (
-                  <div style={{ textAlign: 'center', padding: '20px' }}>
-                    <Calendar size={48} color={theme.colors.textSecondary} style={{ margin: '0 auto 12px' }} />
-                    <p style={{ fontSize: '14px', color: theme.colors.textSecondary }}>
-                      No upcoming events found
-                    </p>
-                  </div>
-                ) : (
-                  <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', maxHeight: '300px', overflowY: 'auto' }}>
-                    {events.slice(0, 10).map((event) => (
-                      <div
-                        key={event.id}
-                        style={{
-                          backgroundColor: theme.colors.border,
-                          borderRadius: '8px',
-                          padding: '12px',
-                          display: 'flex',
-                          justifyContent: 'space-between',
-                          alignItems: 'center',
-                        }}
-                      >
-                        <div style={{ flex: 1 }}>
-                          <p style={{ fontSize: '14px', fontWeight: '600', color: theme.colors.text }}>
-                            {event.title}
-                          </p>
-                          <div style={{ display: 'flex', alignItems: 'center', gap: '4px', marginTop: '4px' }}>
-                            <Clock size={12} color={theme.colors.textSecondary} />
-                            <p style={{ fontSize: '12px', color: theme.colors.textSecondary }}>
-                              {formatEventTime(event.startTime)}
-                            </p>
-                          </div>
-                          {event.taskId && (
-                            <div style={{ display: 'flex', alignItems: 'center', gap: '4px', marginTop: '4px' }}>
-                              <span style={{ fontSize: '10px', backgroundColor: theme.colors.primary, color: 'white', padding: '2px 6px', borderRadius: '4px' }}>
-                                TaskFlow
-                              </span>
-                            </div>
-                          )}
-                        </div>
-                        
-                        {event.taskId && (
-                          <button
-                            onClick={() => handleDeleteEvent(event.id!, event.title)}
-                            style={{
-                              padding: '4px',
-                              border: 'none',
-                              backgroundColor: 'transparent',
-                              cursor: 'pointer',
-                            }}
-                          >
-                            <Trash2 size={16} color={theme.colors.error} />
-                          </button>
-                        )}
-                      </div>
-                    ))}
-                  </div>
-                )}
+          {/* Preview mockup */}
+          <div style={{
+            backgroundColor: theme.colors.border,
+            borderRadius: '12px',
+            padding: '20px',
+            marginBottom: '20px',
+            opacity: 0.7,
+          }}>
+            <h4 style={{ fontSize: '16px', fontWeight: '600', color: theme.colors.text, marginBottom: '12px' }}>
+              📱 Preview: What's Coming
+            </h4>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '8px', padding: '8px', backgroundColor: theme.colors.surface, borderRadius: '8px' }}>
+                <span style={{ fontSize: '16px' }}>📝</span>
+                <span style={{ fontSize: '14px', color: theme.colors.text }}>Finish project presentation</span>
+                <span style={{ fontSize: '12px', color: theme.colors.textSecondary, marginLeft: 'auto' }}>2:00 PM</span>
               </div>
-
-              {/* Info Card */}
-              <div style={{
-                backgroundColor: theme.isDark ? 'rgba(66, 133, 244, 0.1)' : '#f0f4ff',
-                borderRadius: '12px',
-                padding: '16px',
-                border: `2px solid #4285f4`,
-              }}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '8px' }}>
-                  <AlertCircle size={16} color="#4285f4" />
-                  <h4 style={{ fontSize: '14px', fontWeight: '600', color: theme.colors.text }}>
-                    How Calendar Sync Works
-                  </h4>
-                </div>
-                <div style={{ fontSize: '12px', color: theme.colors.textSecondary, lineHeight: '1.4' }}>
-                  • Tasks are created as 1-hour calendar events<br/>
-                  • Reminders are set 15 minutes before each task<br/>
-                  • Only incomplete tasks can be synced<br/>
-                  • Events marked with "TaskFlow" can be deleted here
-                </div>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '8px', padding: '8px', backgroundColor: theme.colors.surface, borderRadius: '8px' }}>
+                <span style={{ fontSize: '16px' }}>🛒</span>
+                <span style={{ fontSize: '14px', color: theme.colors.text }}>Buy groceries</span>
+                <span style={{ fontSize: '12px', color: theme.colors.textSecondary, marginLeft: 'auto' }}>5:00 PM</span>
               </div>
-            </>
-          )}
+            </div>
+          </div>
         </div>
       </motion.div>
     </div>

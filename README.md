@@ -1,6 +1,6 @@
-# TaskFlow - ADHD-Friendly Task Management
+# DailyFlow - ADHD Friendly To-Do List App
 
-A beautiful, modern web application designed specifically for ADHD brains to transform daily tasks into a fun, rewarding experience.
+A beautiful, modern ADHD Friendly To-Do List App designed specifically for ADHD brains to transform daily tasks into a fun, rewarding experience.
 
 ## ✨ Features
 
@@ -24,7 +24,7 @@ A beautiful, modern web application designed specifically for ADHD brains to tra
 1. **Clone and install dependencies:**
 ```bash
 git clone <repository-url>
-cd taskflow
+cd dailyflow
 npm install
 ```
 
@@ -126,7 +126,7 @@ src/
 
 ## 🎯 Deployment
 
-TaskFlow can be deployed to any static hosting service:
+DailyFlow can be deployed to any static hosting service:
 
 ### Netlify
 ```bash
@@ -156,7 +156,7 @@ This project is licensed under the MIT License.
 
 ## 💡 ADHD Tips
 
-TaskFlow includes built-in ADHD success strategies:
+DailyFlow includes built-in ADHD success strategies:
 
 - Start with the smallest task to build momentum
 - Use the spin wheel when feeling overwhelmed

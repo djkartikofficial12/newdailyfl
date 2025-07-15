@@ -117,7 +117,7 @@ class NotificationService {
           sound: 'default',
           attachments: [],
           actionTypeId: '',
-          group: 'taskflow'
+          group: 'dailyflow'
         }]
       };
 

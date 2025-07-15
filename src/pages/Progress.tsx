@@ -58,11 +58,11 @@ export default function Progress() {
   const { theme } = useTheme()
   
   // Get or generate real data
-  const weeklyData = getStoredData('taskflow_weekly_data', generateWeeklyData())
-  const currentStreak = getStoredData('taskflow_current_streak', Math.floor(Math.random() * 20) + 5)
-  const totalCompleted = getStoredData('taskflow_total_completed', Math.floor(Math.random() * 200) + 100)
-  const todayCompleted = getStoredData('taskflow_today_completed', Math.floor(Math.random() * 8) + 2)
-  const todayTotal = getStoredData('taskflow_today_total', Math.floor(Math.random() * 5) + 8)
+  const weeklyData = getStoredData('dailyflow_weekly_data', generateWeeklyData())
+  const currentStreak = getStoredData('dailyflow_current_streak', Math.floor(Math.random() * 20) + 5)
+  const totalCompleted = getStoredData('dailyflow_total_completed', Math.floor(Math.random() * 200) + 100)
+  const todayCompleted = getStoredData('dailyflow_today_completed', Math.floor(Math.random() * 8) + 2)
+  const todayTotal = getStoredData('dailyflow_today_total', Math.floor(Math.random() * 5) + 8)
   const todayPercentage = (todayCompleted / todayTotal) * 100
   
   // Calculate success rate from weekly data

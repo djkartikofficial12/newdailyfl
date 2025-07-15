@@ -1,8 +1,8 @@
 import { CapacitorConfig } from '@capacitor/cli';
 
 const config: CapacitorConfig = {
-  appId: 'com.taskflow.app',
-  appName: 'TaskFlow',
+  appId: 'com.dailyflow.app',
+  appName: 'DailyFlow',
   webDir: 'dist',
   server: {
     androidScheme: 'https'

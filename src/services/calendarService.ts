@@ -293,7 +293,7 @@ class CalendarService {
 
     return await this.createEvent({
       title: `${task.emoji} ${task.title}`,
-      description: `TaskFlow Task - Category: ${task.category}\nPriority: ${task.priority}`,
+      description: `DailyFlow Task - Category: ${task.category}\nPriority: ${task.priority}`,
       startTime,
       endTime,
       reminder: { minutes: 15 },

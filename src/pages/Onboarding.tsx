@@ -6,7 +6,7 @@ import { Sparkles, ChevronRight, CheckCircle } from 'lucide-react'
 const steps = [
   {
     id: 'welcome',
-    title: 'Welcome to TaskFlow',
+    title: 'Welcome to DailyFlow',
     subtitle: 'Transform your daily tasks into a fun, rewarding experience designed for your unique brain',
     emoji: '✨',
   },
@@ -43,7 +43,7 @@ const steps = [
   {
     id: 'complete',
     title: "You're All Set!",
-    subtitle: "Your personalized TaskFlow experience is ready. Let's turn your tasks into achievements! 🚀",
+    subtitle: "Your personalized DailyFlow experience is ready. Let's turn your tasks into achievements! 🚀",
     emoji: '🎉',
   },
 ]
@@ -63,6 +63,8 @@ export default function Onboarding() {
     if (currentStep < steps.length - 1) {
       setCurrentStep(currentStep + 1)
     } else {
+      // Mark onboarding as complete
+      localStorage.setItem('dailyflow_onboarding_complete', 'true')
       navigate('/')
     }
   }

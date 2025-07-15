@@ -125,9 +125,9 @@ export default function Settings() {
         {
           icon: Calendar,
           label: 'Calendar Sync',
-          subtitle: calendarConnected ? 'Connected to Google Calendar' : 'Connect to Google Calendar',
+          subtitle: 'Coming Soon! 🚀',
           type: 'navigation',
-          onPress: () => setShowCalendarSync(true)
+          onPress: () => alert('🚀 Calendar sync is coming soon! We\'re working hard to bring you seamless calendar integration. Stay tuned for updates!')
         }
       ]
     },
@@ -143,7 +143,7 @@ export default function Settings() {
         },
         {
           icon: Heart,
-          label: 'Rate TaskFlow',
+          label: 'Rate DailyFlow',
           subtitle: 'Love the app? Share it!',
           type: 'navigation',
           onPress: () => alert('Thank you for your support! You\'ll be redirected to the app store.')
@@ -208,7 +208,7 @@ export default function Settings() {
           </div>
           <div style={{ flex: 1 }}>
             <h2 style={{ fontSize: '18px', fontWeight: '600', fontFamily: 'Poppins, sans-serif', color: theme.colors.text, marginBottom: '2px' }}>
-              TaskFlow Champion
+              DailyFlow Champion
             </h2>
             <p style={{ fontSize: '14px', color: theme.colors.textSecondary }}>
               Ready to conquer today!
@@ -436,7 +436,7 @@ export default function Settings() {
           style={{ textAlign: 'center', padding: '20px 0', marginBottom: '20px' }}
         >
           <p style={{ fontSize: '14px', fontWeight: '500', color: theme.colors.textSecondary, marginBottom: '4px' }}>
-            TaskFlow v1.0.0
+            DailyFlow v1.0.0
           </p>
           <p style={{ fontSize: '14px', color: theme.colors.textSecondary, marginBottom: '4px' }}>
             Built with ❤️ for neurodivergent minds
